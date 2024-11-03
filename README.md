@@ -11,6 +11,7 @@
 | Phillip Wu  | [https://github.com/philliptwu](https://github.com/philliptwu) |
 
 ## Data exploration:
+Link to Jupyter Notebook
 https://github.com/DaikonPlays/diet-warriors/blob/Milestone2/src/data_exploration.ipynb
 ### # of observations
 
