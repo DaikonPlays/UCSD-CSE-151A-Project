@@ -11,7 +11,7 @@
 | Phillip Wu  | [https://github.com/philliptwu](https://github.com/philliptwu) |
 
 ## Data exploration:
-
+https://github.com/DaikonPlays/diet-warriors/blob/Milestone2/src/data_exploration.ipynb
 ### # of observations
 
 There are 7806 rows in our all_diets file, which means we have a total of 7806 observations on different diets. We have six total features: diet type, recipe name, cuisine, protein, carbs, and fats. Our target feature is the diet type, and the main independent features are protein, carb, fats, and cuisine.
