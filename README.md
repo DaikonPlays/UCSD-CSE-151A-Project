@@ -11,7 +11,7 @@
 | Phillip Wu  | [https://github.com/philliptwu](https://github.com/philliptwu) |
 
 ## MS2: Data Exploration:
-[Milestone 2 Notebook](https://github.com/DaikonPlays/diet-warriors/blob/Milestone2/src/data_exploration.ipynb)
+#### [Milestone 2 Notebook](https://github.com/DaikonPlays/diet-warriors/blob/Milestone2/src/data_exploration.ipynb)
 
 ### # of Observations
 
