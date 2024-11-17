@@ -47,3 +47,7 @@ There are three features that we are considering dropping, which are cuisine nam
 ### Classification encoding
 For our attributes that are classes: Diet_type and Cuisine_type, we will have to encode them either using ordinal encoding or one-hot encoding for classification models to understand them.
 
+### Milestone 3 Update
+We built an intial modle using logistic regression to get a baseline model, but we found that the accuracy was surprisingly low, about 40%. Furthermore, our MSE for training and validation were both high relative to our labels, suggesting that our model is underfitting currently. For the next model, we want to try SVM. We believe that it could be better because our logistic regression model doesn't seem to have a good baseline. SVMs look good because they are particularly good at handling non-linear relationships, which is important because there is a lot of overlap in our diet types and their features. SVMs could help us separate the data points more and give us a more accurate representation of the data.
+
+# [Milestone 3 Repo](https://github.com/DaikonPlays/diet-warriors/tree/Milestone3) 
