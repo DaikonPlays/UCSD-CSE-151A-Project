@@ -58,7 +58,7 @@ Our initial logistic regression model yielded surprisingly low accuracy at 40%. 
 
 ### Where does your model fit in the fitting graph? 
 
-![Fitting Graph](graphs\svc_fitting_graph.png)
+![Fitting Graph](https://github.com/DaikonPlays/diet-warriors/blob/Milestone4/graphs/svc_fitting_graph.png)
 
 Our model seems to be underfitting our data as both of our training and validation accuracies are low with an even lower testing accuracy. 
 
@@ -69,4 +69,3 @@ We are thinking of trying neural networks next which might help improve classifi
 ### Conclusion
 
 For our logistic regression model (our first model), we saw low accuracies of around 40%. In this model, we seem to suffer from underfitting to the data. For our second model, we went ahead with implementing a Support Vector Machine specifically a Support Vector Classifier (SVC). However, we only saw small increases to accuracy using this model. The new accuracies settled around training 59%, testing 54%, and validation 60%. This leads us to the conclusion that we are still underfitting the data even with an SVC. To improve, we will need to try to capture more the the data's complexity by possibly adding another feature, using a more sophisticated model, or increasing dimensionality. 
-  
