@@ -52,3 +52,21 @@ For our attributes that are classes: Diet_type and Cuisine_type, we will have to
 
 ### Conclusion
 Our initial logistic regression model yielded surprisingly low accuracy at 40%. Through comparing MSE values between training (3.67) and validation (4.0) sets, we determined that while overfitting is not an issue due to their similar values, the high MSE relative to our label encoding range (0-4) indicates significant underfitting. This poor baseline performance suggests the need to explore alternative approaches. We propose implementing Support Vector Machines (SVM) as our next model, given their strength in handling non-linear relationships. This capability is particularly relevant for our dataset, where diet types and their features show considerable overlap. SVM's ability to create more sophisticated decision boundaries could potentially provide a more accurate classification of our dietary data.
+
+## MS4: Second Model
+#### [Milestone 4 Notebook](https://github.com/DaikonPlays/diet-warriors/blob/Milestone4/src/diet_classifer.ipynb) 
+
+### Where does your model fit in the fitting graph? 
+
+![Fitting Graph](graphs\svc_fitting_graph.png)
+
+Our model seems to be underfitting our data as both of our training and validation accuracies are low with an even lower testing accuracy. 
+
+### What are the next models you are thinking of and why?
+
+We are thinking of trying neural networks next which might help improve classification by capturing more complexity within the data.
+
+### Conclusion
+
+For our logistic regression model (our first model), we saw low accuracies of around 40%. In this model, we seem to suffer from underfitting to the data. For our second model, we went ahead with implementing a Support Vector Machine specifically a Support Vector Classifier (SVC). However, we only saw small increases to accuracy using this model. The new accuracies settled around training 59%, testing 54%, and validation 60%. This leads us to the conclusion that we are still underfitting the data even with an SVC. To improve, we will need to try to capture more the the data's complexity by possibly adding another feature, using a more sophisticated model, or increasing dimensionality. 
+  
