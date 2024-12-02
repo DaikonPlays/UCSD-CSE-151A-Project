@@ -61,7 +61,7 @@ For our new models, we tried two differnet types: XGBoost and SVC. For XGBoost, 
 
 ### Where does your model fit in the fitting graph? 
 
-![Fitting Graph](https://github.com/DaikonPlays/diet-warriors/blob/Milestone4/graphs/svc_fitting_graph.png)
+![Fitting Graph](https://github.com/DaikonPlays/diet-warriors/blob/Milestone4/graphs/gb_fitting_graph.png)
 
 Based on our results, it seems that our model is likely underfitting the data, as both the training (59%) and validation (60%) accuracies are relatively low, suggesting the model isn't effectively capturing the underlying patterns. We hypothesize that this underfitting could stem from several factors. First, the default XGBoost settings may not be optimal for our dataset, potentially resulting in insufficient model complexity. Additionally, the features we are using—fat, carbs, protein, and cuisine type—might not provide enough distinguishing power to differentiate between diet types. Second, there could be data imbalance in the dataset, with certain diet types being overrepresented, which could cause the model to struggle with learning patterns for less frequent classes, leading to poor generalization and lower test accuracy.
 
