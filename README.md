@@ -56,6 +56,9 @@ Our initial logistic regression model yielded surprisingly low accuracy at 40%. 
 ## MS4: Second Model
 #### [Milestone 4 Notebook](https://github.com/DaikonPlays/diet-warriors/blob/Milestone4/src/diet_classifer.ipynb) 
 
+### Model evaluations and training and test error
+For our new models, we tried two differnet types: XGBoost and SVC. For XGBoost, we used a simple XGBoost model to see if there were any changes in accuracy. After, we tried to do a base SVC model, which did show some improvment, up to mid 50s% for testing and training. After, we added code to fine-tune the SVC model parameters to test different combinations of the regularization parameter C and the kernel coefficient γ to see if there were any further improvements in the result. But, the improvement was insignificant. When looking at the training and test error from our initial model in MS3 and ours now in MS4, we saw an overall 15% improvement in accuracy, thus resulting in less error.
+
 ### Where does your model fit in the fitting graph? 
 
 ![Fitting Graph](https://github.com/DaikonPlays/diet-warriors/blob/Milestone4/graphs/svc_fitting_graph.png)
@@ -71,3 +74,36 @@ After reviewing our current model's performance, we are considering Random Fores
 Our initial logistic regression model achieved relatively low accuracies around 40%, indicating significant underfitting of the data. We then implemented a Support Vector Classifier (SVC) as our second approach, which showed modest improvement with training accuracy at 59%, testing at 54%, and validation at 60%. Despite this improvement, the consistently low performance across all metrics suggests that our model still fails to capture the underlying complexity of the data.
 The similar performance between training (59%) and validation (60%) sets reveals that our current model's limitations stem from both architectural constraints and data characteristics. Our feature set—consisting of fat, carbs, protein, and cuisine type—may lack the discriminative power needed for effective diet classification. Additionally, potential class imbalances in our dataset could be hampering the model's ability to learn patterns for underrepresented diet types.
 To address these limitations, we propose two promising approaches: Random Forest and Neural Networks. Random Forest's ensemble methodology could better handle complex feature interactions while maintaining robustness against overfitting. Neural Networks offer the potential to learn subtle patterns in diet classifications, particularly useful for distinguishing between similar diet categories. We will also explore feature engineering and address class imbalance issues to enhance model performance. Through these refinements, we aim to develop a more sophisticated and accurate diet classification system that better captures the nuances in our data.
+
+
+### Predictions of correct and FP and FN from test dataset
+Code for this can be found in our MS 4 branch
+Class  dash
+True Positives:  127
+False Positives:  131
+True Negative:  1084
+False Negative:  220
+
+Class  keto
+True Positives:  203
+False Positives:  186
+True Negative:  1083
+False Negative:  90
+
+Class  mediterranean
+True Positives:  262
+False Positives:  114
+True Negative:  1096
+False Negative:  90
+
+Class  paleo
+True Positives:  57
+False Positives:  104
+True Negative:  1189
+False Negative:  212
+
+Class  vegan
+True Positives:  198
+False Positives:  180
+True Negative:  1081
+False Negative:  103
