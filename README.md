@@ -78,32 +78,10 @@ To address these limitations, we propose two promising approaches: Random Forest
 
 ### Predictions of correct and FP and FN from test dataset
 Code for this can be found in our MS 4 branch
-Class  dash
-True Positives:  127
-False Positives:  131
-True Negative:  1084
-False Negative:  220
-
-Class  keto
-True Positives:  203
-False Positives:  186
-True Negative:  1083
-False Negative:  90
-
-Class  mediterranean
-True Positives:  262
-False Positives:  114
-True Negative:  1096
-False Negative:  90
-
-Class  paleo
-True Positives:  57
-False Positives:  104
-True Negative:  1189
-False Negative:  212
-
-Class  vegan
-True Positives:  198
-False Positives:  180
-True Negative:  1081
-False Negative:  103
+| Class            | True Positives | False Positives | True Negatives | False Negatives |
+|-------------------|----------------|-----------------|----------------|-----------------|
+| Dash             | 127            | 131             | 1084           | 220             |
+| Keto             | 203            | 186             | 1083           | 90              |
+| Mediterranean    | 262            | 114             | 1096           | 90              |
+| Paleo            | 57             | 104             | 1189           | 212             |
+| Vegan            | 198            | 180             | 1081           | 103             |
