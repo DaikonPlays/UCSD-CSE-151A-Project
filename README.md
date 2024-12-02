@@ -56,6 +56,9 @@ Our initial logistic regression model yielded surprisingly low accuracy at 40%. 
 ## MS4: Second Model
 #### [Milestone 4 Notebook](https://github.com/DaikonPlays/diet-warriors/blob/Milestone4/src/diet_classifer.ipynb) 
 
+### Model evaluations and training and test error
+For our new models, we tried two differnet types: XGBoost and SVC. For XGBoost, we used a simple XGBoost model to see if there were any changes in accuracy. After, we tried to do a base SVC model, which did show some improvment, up to mid 50s% for testing and training. After, we added code to fine-tune the SVC model parameters to test different combinations of the regularization parameter C and the kernel coefficient γ to see if there were any further improvements in the result. But, the improvement was insignificant. When looking at the training and test error from our initial model in MS3 and ours now in MS4, we saw an overall 15% improvement in accuracy, thus resulting in less error.
+
 ### Where does your model fit in the fitting graph? 
 
 ![Fitting Graph](https://github.com/DaikonPlays/diet-warriors/blob/Milestone4/graphs/svc_fitting_graph.png)
