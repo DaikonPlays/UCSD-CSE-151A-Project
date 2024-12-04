@@ -88,8 +88,8 @@ Training Accuracy: 0.5471
 Test Accuracy: 0.5301
 Validation Accuracy: 0.5500
 ```
-![Fitting Graph](https://github.com/DaikonPlays/diet-warriors/blob/Milestone4/graphs/logreg_fitting_graph.png)
-![Confusion Matrix](https://github.com/DaikonPlays/diet-warriors/blob/Milestone4/graphs/logreg_cm.png)
+![Fitting Graph](https://github.com/DaikonPlays/diet-warriors/blob/Milestone5/graphs/logreg_fitting_graph.png)
+![Confusion Matrix](https://github.com/DaikonPlays/diet-warriors/blob/Milestone5/graphs/logreg_cm.png)
 
 
 ### **Model 2**
@@ -107,8 +107,8 @@ Training Accuracy: 0.5855
 Test Accuracy: 0.5461
 Validation Accuracy: 0.5885
 ```
-![Fitting Graph](https://github.com/DaikonPlays/diet-warriors/blob/Milestone4/graphs/svc_fitting_graph.png)
-![Confusion Matrix](https://github.com/DaikonPlays/diet-warriors/blob/Milestone4/graphs/svc_cm.png)
+![Fitting Graph](https://github.com/DaikonPlays/diet-warriors/blob/Milestone5/graphs/svc_fitting_graph.png)
+![Confusion Matrix](https://github.com/DaikonPlays/diet-warriors/blob/Milestone5/graphs/svc_cm.png)
 
 ### **Model 3**
 ```
@@ -124,7 +124,7 @@ Training Accuracy: 0.7532
 Test Accuracy: 0.5557
 Validation Accuracy: 0.7574
 ```
-![Fitting Graph](https://github.com/DaikonPlays/diet-warriors/blob/Milestone4/graphs/gm_fitting_graph.png)
+![Fitting Graph](https://github.com/DaikonPlays/diet-warriors/blob/Milestone5/graphs/gm_fitting_graph.png)
 
 ## Discussion
 
