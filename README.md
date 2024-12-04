@@ -10,10 +10,10 @@
 | Skyler Goh  | [https://github.com/SkylerGoh](https://github.com/SkylerGoh) |
 | Phillip Wu  | [https://github.com/philliptwu](https://github.com/philliptwu) |
 
-## Data exploration:
-Link to Jupyter Notebook
-https://github.com/DaikonPlays/diet-warriors/blob/Milestone2/src/data_exploration.ipynb
-### # of observations
+## MS2: Data Exploration:
+#### [Milestone 2 Notebook](https://github.com/DaikonPlays/diet-warriors/blob/Milestone2/src/data_exploration.ipynb)
+
+### # of Observations
 
 There are 7806 rows in our all_diets file, which means we have a total of 7806 observations on different diets. We have six total features: diet type, recipe name, cuisine, protein, carbs, and fats. Our target feature is the diet type, and the main independent features are protein, carb, fats, and cuisine.
 
@@ -24,11 +24,11 @@ For cuisine types, there are a bunch of categories we account for: ['american' '
 The diet types are our main target feature and there are five classes: ['paleo' 'vegan' 'keto' 'mediterranean' 'dash'].
 The rest of the features are numbers and are no discrete.
 
-### Data distribution
+### Data Distribution
 
 There are 1522 obersavtions for vegan, 1274 observations for paleo, 1753 observations for mediterranean, 1512 observations for keto, 1745 observations for dash
 
-## Initial Pre-processing
+## Initial Pre-Processing Plans
 
 ### Scale
 
@@ -40,10 +40,15 @@ For protein, fat, and carb, the means are pretty different: 83.23, 117.33, and 1
 
 There are no missing data and null values. 
 
-### Dropping unneccesary data
+### Dropping Unneccesary Data
 
 There are three features that we are considering dropping, which are cuisine name, extraction date, and time because they don't seem to be that impactful on our overall outcome.
 
-### Classification encoding
+### Classification Encoding
 For our attributes that are classes: Diet_type and Cuisine_type, we will have to encode them either using ordinal encoding or one-hot encoding for classification models to understand them.
 
+## MS3: Data Pre-Processing
+#### [Milestone 3 Notebook](https://github.com/DaikonPlays/diet-warriors/blob/Milestone3/src/diet_classifer.ipynb) 
+
+### Conclusion
+Our initial logistic regression model yielded surprisingly low accuracy at 40%. Through comparing MSE values between training (3.67) and validation (4.0) sets, we determined that while overfitting is not an issue due to their similar values, the high MSE relative to our label encoding range (0-4) indicates significant underfitting. This poor baseline performance suggests the need to explore alternative approaches. We propose implementing Support Vector Machines (SVM) as our next model, given their strength in handling non-linear relationships. This capability is particularly relevant for our dataset, where diet types and their features show considerable overlap. SVM's ability to create more sophisticated decision boundaries could potentially provide a more accurate classification of our dietary data.
