@@ -31,7 +31,7 @@ The first step in our data exploration was to identify the various attributes pr
 | **Extraction_day**| The day the data was extracted |
 | **Extraction_time**| The time the data was extracted |
 
-Our target variable is Diet_Type as we aim to predict which diet types best suit our users. The class contains the following unique labels:
+Our target variable is `Diet_Type` as we aim to predict which diet types best suit our users. The class contains the following unique labels:
 
 ```
 diet_types = diet_data['Diet_type'].unique()
@@ -40,7 +40,7 @@ print(diet_types)
 ['paleo' 'vegan' 'keto' 'mediterranean' 'dash']
 ```
 
-We also examined the unique labels in the Cuisine_Type attribute:
+We also examined the unique labels in the `Cuisine_Type` attribute:
 ```
 cuisine_types = diet_data['Cuisine_type'].unique()
 print(cuisine_types)
