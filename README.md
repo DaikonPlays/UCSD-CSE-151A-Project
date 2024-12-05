@@ -125,6 +125,7 @@ Test Accuracy: 0.5557
 Validation Accuracy: 0.7574
 ```
 ![Fitting Graph](https://github.com/DaikonPlays/diet-warriors/blob/Milestone5/graphs/gm_fitting_graph.png)
+![Confusion Matrix](https://github.com/DaikonPlays/diet-warriors/blob/Milestone5/graphs/gm_cm.png)
 
 ## Discussion
 
