@@ -69,9 +69,8 @@ dtype: int64
 We see that there are no null values. YAY!
 
 To visualize relationships in our data, we used two approaches:
-
-The pairplot function from seaborn to visualize pairwise relationships between our numerical features (Protein, Fat, Carbs)
-Pie charts to display the proportional composition of **Protein(g)**, **Carbs(g)**, and **Fat(g)** across different diet types in the diet_data dataset
+1. The pairplot function from seaborn to visualize pairwise relationships between our numerical features (Protein, Fat, Carbs)
+2. Pie charts to display the proportional composition of **Protein(g)**, **Carbs(g)**, and **Fat(g)** across different diet types in the diet_data dataset
 
 Below are our visualizations:
 
