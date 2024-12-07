@@ -119,7 +119,7 @@ y = dd_processed['Diet']
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=23)
 
 # validation test
-X_train_val, X_test_val, y_train_val, y_test_val = train_test_split(X_train, y_train, test_size=0.2, random_state=42)
+X_train_val, X_test_val, y_train_val, y_test_val = train_test_split(X_train, y_train, test_size=0.2, random_state=23)
 ```
 
 ### **Model 1:**
@@ -188,7 +188,7 @@ Below is our calculated accuracy scores and a classification report for the Logi
 ```
 Training Accuracy: 0.5452
 Test Accuracy: 0.5378
-Validation Accuracy: 0.5388
+Validation Accuracy: 0.5292
 
 Classification Report:
                precision    recall  f1-score   support
@@ -250,7 +250,7 @@ Our results and figures for the SVM model:
 ```
 Training Accuracy: 0.5852
 Test Accuracy: 0.5589
-Validation Accuracy: 0.5701
+Validation Accuracy: 0.5733
 
 Classification Report:
                precision    recall  f1-score   support
@@ -308,7 +308,7 @@ Finally, our results and figures for the Gradient Boost Classifier:
 ```
 Training Accuracy: 0.7534
 Test Accuracy: 0.5653
-Validation Accuracy: 0.7454
+Validation Accuracy: 0.7462
 
 Classification Report:
                precision    recall  f1-score   support
@@ -358,6 +358,22 @@ True Negative:  1119
 False Negative:  126
 ```
 ## Discussion
+
+In Milestone 3, we began by training a Logistic Regression Classifier on our diet classification task. As shown above, the model demonstrates relatively consistent performance across all three datasets, with accuracies of 54% on the training and test sets, and 53% on the validation data. The small difference between training and test accuracy (only about 0.74 percentage points) suggests that overfitting is not a significant issue. However, the overall low accuracy across all splits indicates that the model is likely underfitting, meaning it struggles to capture the underlying patterns in the relationship between our features (nutritional content and cuisine type) and the target (diet types).
+
+After some discussion, we hypothesized that the relatively low accuracy with the Logistic Regression model suggests several potential issues. First, we considered the possibility that the dataset itself might not have enough distinguishing features. Specifically, there may be overlap in the nutritional profiles across different diet types. For example, in the pie chart above, we observe that the overall distribution of fat, protein, and carbs in the ‘mediterranean’ and ‘dash’ diets are relatively similar, differing only slightly. Another limitation of our initial model is that the relationship between nutritional values and diet types may be more non-linear than our model can capture. Since Logistic Regression is a linear model, it is not able to account for more complex relationships that could exist between the features and the target.
+
+After analyzing the results of our first model, we decided to train our second model using a Support Vector Machine (SVM). For this model, we chose the Radial Basis Function (RBF) kernel because it transforms the data into a higher-dimensional space, allowing the SVM to find a non-linear decision boundary. This choice was made to test our hypothesis from the previous model's analysis and to explore whether a non-linear model would improve performance.
+
+After running the model, we observed an improvement of about 3-4 percentage points across all datasets, which supports our hypothesis that the dataset contains more complexity than initially anticipated. However, despite the improvement, the overall accuracy remains relatively modest. This suggests that, while the SVM with the RBF kernel is better suited for capturing non-linear relationships, it still struggles to fully capture the complexity of diet classification with our current features.
+
+For our final model, we chose to train a Gradient Boosting Classifier, which can naturally handle feature interactions through its tree-based architecture. We believed that this was particularly relevant for our dataset, where the relationship between nutritional content (protein, carbs, fat) and diet types might involve complex interdependencies. For instance, the combination of high fat and low carbs may be more indicative of a keto diet than either feature alone. The sequential nature of Gradient Boosting, where each tree corrects the errors of the previous one, allows the model to learn intricate patterns gradually. This is especially useful when diet types have subtle distinctions in their nutritional profiles that simpler models might miss. Unlike SVM, which uses a single kernel function, Gradient Boosting can automatically learn feature transformations through its tree structure, making it well-suited to handle both numerical features (nutritional values) and one-hot encoded categorical features (cuisine types) in a unified way.
+
+For our hyperparameters, we chose `n_estimators=100` to ensure the model has enough boosting stages to capture patterns without being overly computationally expensive. The `learning_rate=0.1` balances the contribution of each tree, providing steady and controlled learning while minimizing the risk of overfitting. The `max_depth=5` limits the complexity of individual trees, enabling the model to capture moderately complex relationships without overfitting to the training data.
+
+The result of our final model, as shown in the above section, demonstrated a significant increase in both training and validation accuracies, but the test accuracy only showed a marginal improvement over the SVM's performance, which was unexpected. The large gap between training/validation and test performance (approximately 19 percentage points) indicates that the model has significant overfitting issues. Our team analyzed this overfitting and identified several possible reasons:
+
+First, the hyperparameters we chose—such as the relatively high depth and the large number of estimators—might not be suitable for the complexity of our dataset. These parameters could make the model overly complex, leading it to learn too closely from the training data rather than generalizing to unseen data. Second, while we observed some complexity in our data earlier, the model's architecture may assume a higher level of intricacy than necessary. The choice of deeper trees and a larger number of estimators could be capturing noise in the data rather than the true patterns, leading to overfitting. Finally, there is a possibility that the dataset contains noise or irrelevant features, which the model could be learning instead of the actual underlying structure. This is particularly a concern with Gradient Boosting models, as they iteratively focus on correcting residuals, which can result in overfitting to noise if not properly regularized.
 
 ## Conclusion
 
