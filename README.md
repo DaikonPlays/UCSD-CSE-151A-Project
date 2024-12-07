@@ -12,8 +12,6 @@
 
 ## Introduction
 
-## Figures
-
 ## Methods
 
 ### **Data Exploration:**
