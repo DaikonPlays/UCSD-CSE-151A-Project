@@ -124,82 +124,239 @@ X_train_val, X_test_val, y_train_val, y_test_val = train_test_split(X_train, y_t
 
 ### **Model 1:**
 
+We chose our first model to be a simple Logistic Regression classifier. After training, we generated predictions on three different datasets: the training set, test set, and validation set. We calculated accuracy scores for each of these predictions using the `accuracy_score` metric, storing these scores in variables for training, test, and validation accuracy respectively. The resulting performance of the model is noted in the section below. 
+
 ```
 # We are starting with a simple Logistic Regression to get a baseline performance
 logreg = LogisticRegression()
 logreg.fit(X_train, y_train)
+
+# Predictions
+y_pred_train = logreg.predict(X_train)
+y_pred_test = logreg.predict(X_test)
+y_pred_val = logreg.predict(X_test_val)
+
+logreg_training_accuracy = accuracy_score(y_train, y_pred_train)
+logreg_test_accuracy = accuracy_score(y_test, y_pred_test)
+logreg_validation_accuracy = accuracy_score(y_test_val, y_pred_val)
 ```
-
-
 ### **Model 2:**
+
+Similarly to our Logistic Regression implementation, we trained a Support Vector Machine (SVM) classifier using a radial basis function (RBF) kernel.
 
 ```
 svc = SVC(kernel='rbf')
 svc.fit(X_train, y_train)
+
+# Predictions
+y_pred_train = svc.predict(X_train)
+y_pred_test = svc.predict(X_test)
+y_pred_val = svc.predict(X_test_val)
+
+svc_training_accuracy = accuracy_score(y_train, y_pred_train)
+svc_test_accuracy = accuracy_score(y_test, y_pred_test)
+svc_validation_accuracy = accuracy_score(y_test_val, y_pred_val)
 ```
 
 ### **Model 3:**
+
+Finally, we trained a Gradient Boosting Classifier in the same manner as the model above. This model was configured with the hyperparameters: 100 estimators, a learning rate of 0.1, maximum tree depth of 5, and a validation fraction of 0.1. 
+
 ```
 gb_model = GradientBoostingClassifier(n_estimators=100, learning_rate=0.1, max_depth=5, validation_fraction=0.1, random_state=42)
 gb_model.fit(X_train, y_train)
+
+gb_model.score(X_test, y_test)
+gb_model.score(X_test_val, y_test_val)
+
+# Predictions
+y_pred_train = gb_model.predict(X_train)
+y_pred_test = gb_model.predict(X_test)
+y_pred_val = gb_model.predict(X_test_val)
+
+gb_training_accuracy = accuracy_score(y_train, y_pred_train)
+gb_test_accuracy = accuracy_score(y_test, y_pred_test)
+gb_validation_accuracy = accuracy_score(y_test_val, y_pred_val)
 ```
 
 ## Results
 
+Below is our calculated accuracy scores and a classification report for the Logistic Regression classifier:
+
 ### **Model 1**
 
 ```
-logreg_training_accuracy = accuracy_score(y_train, y_pred_train)
-logreg_test_accuracy = accuracy_score(y_test, y_pred_test)
-logreg_validation_accuracy = accuracy_score(y_test_val, y_pred_val)
+Training Accuracy: 0.5452
+Test Accuracy: 0.5378
+Validation Accuracy: 0.5388
 
-print(f"Training Accuracy: {logreg_training_accuracy:.4f}")
-print(f"Test Accuracy: {logreg_test_accuracy:.4f}")
-print(f"Validation Accuracy: {logreg_validation_accuracy:.4f}")
-------------------------------------------------------------
-Training Accuracy: 0.5471
-Test Accuracy: 0.5301
-Validation Accuracy: 0.5500
+Classification Report:
+               precision    recall  f1-score   support
+
+           0       0.44      0.32      0.37       348
+           1       0.49      0.79      0.61       303
+           2       0.71      0.75      0.73       361
+           3       0.34      0.11      0.16       253
+           4       0.52      0.64      0.58       297
+
+    accuracy                           0.54      1562
+   macro avg       0.50      0.52      0.49      1562
+weighted avg       0.51      0.54      0.51      1562
+
 ```
-![Fitting Graph](https://github.com/DaikonPlays/diet-warriors/blob/Milestone5/graphs/logreg_fitting_graph.png)
-![Confusion Matrix](https://github.com/DaikonPlays/diet-warriors/blob/Milestone5/graphs/logreg_cm.png)
+To visualize our model's performance, we created a fitting graph comparing accuracies across different data splits:
 
+![Fitting Graph](https://github.com/DaikonPlays/diet-warriors/blob/Milestone5/graphs/logreg_fitting_graph.png)
+
+Further, we constructed a confusion matrix to analyze the model's performance across different diet types. For each diet category, we calculated and displayed TP, FN, TN, FN.
+
+![Confusion Matrix](https://github.com/DaikonPlays/diet-warriors/blob/Milestone5/graphs/logreg_cm.png)
+```
+Class  dash
+True Positives:  113
+False Positives:  142
+True Negative:  1072
+False Negative:  235
+
+Class  keto
+True Positives:  238
+False Positives:  245
+True Negative:  1014
+False Negative:  65
+
+Class  mediterranean
+True Positives:  272
+False Positives:  110
+True Negative:  1091
+False Negative:  89
+
+Class  paleo
+True Positives:  27
+False Positives:  53
+True Negative:  1256
+False Negative:  226
+
+Class  vegan
+True Positives:  190
+False Positives:  172
+True Negative:  1093
+False Negative:  107
+```
 
 ### **Model 2**
 
-```
-svc_training_accuracy = accuracy_score(y_train, y_pred_train)
-svc_test_accuracy = accuracy_score(y_test, y_pred_test)
-svc_validation_accuracy = accuracy_score(y_test_val, y_pred_val)
+Our results and figures for the SVM model:
 
-print(f"Training Accuracy: {svc_training_accuracy:.4f}")
-print(f"Test Accuracy: {svc_test_accuracy:.4f}")
-print(f"Validation Accuracy: {svc_validation_accuracy:.4f}")
-------------------------------------------------------------
-Training Accuracy: 0.5855
-Test Accuracy: 0.5461
-Validation Accuracy: 0.5885
 ```
+Training Accuracy: 0.5852
+Test Accuracy: 0.5589
+Validation Accuracy: 0.5701
+
+Classification Report:
+               precision    recall  f1-score   support
+
+           0       0.49      0.39      0.43       348
+           1       0.56      0.73      0.63       303
+           2       0.70      0.77      0.73       361
+           3       0.33      0.19      0.24       253
+           4       0.55      0.65      0.60       297
+
+    accuracy                           0.56      1562
+   macro avg       0.53      0.54      0.53      1562
+weighted avg       0.54      0.56      0.54      1562
+```
+
 ![Fitting Graph](https://github.com/DaikonPlays/diet-warriors/blob/Milestone5/graphs/svc_fitting_graph.png)
 ![Confusion Matrix](https://github.com/DaikonPlays/diet-warriors/blob/Milestone5/graphs/svc_cm.png)
 
-### **Model 3**
 ```
-gb_training_accuracy = accuracy_score(y_train, y_pred_train)
-gb_test_accuracy = accuracy_score(y_test, y_pred_test)
-gb_validation_accuracy = accuracy_score(y_test_val, y_pred_val)
+Class  dash
+True Positives:  135
+False Positives:  141
+True Negative:  1073
+False Negative:  213
 
-print(f"Training Accuracy: {gb_training_accuracy:.4f}")
-print(f"Test Accuracy: {gb_test_accuracy:.4f}")
-print(f"Validation Accuracy: {gb_validation_accuracy:.4f}")
-------------------------------------------------------------
-Training Accuracy: 0.7532
-Test Accuracy: 0.5557
-Validation Accuracy: 0.7574
+Class  keto
+True Positives:  220
+False Positives:  174
+True Negative:  1085
+False Negative:  83
+
+Class  mediterranean
+True Positives:  277
+False Positives:  118
+True Negative:  1083
+False Negative:  84
+
+Class  paleo
+True Positives:  48
+False Positives:  99
+True Negative:  1210
+False Negative:  205
+
+Class  vegan
+True Positives:  193
+False Positives:  157
+True Negative:  1108
+False Negative:  104
+```
+
+### **Model 3**
+
+Finally, our results and figures for the Gradient Boost Classifier:
+
+```
+Training Accuracy: 0.7534
+Test Accuracy: 0.5653
+Validation Accuracy: 0.7454
+
+Classification Report:
+               precision    recall  f1-score   support
+
+           0       0.52      0.45      0.48       348
+           1       0.58      0.70      0.63       303
+           2       0.70      0.76      0.73       361
+           3       0.36      0.26      0.30       253
+           4       0.54      0.58      0.56       297
+
+    accuracy                           0.57      1562
+   macro avg       0.54      0.55      0.54      1562
+weighted avg       0.55      0.57      0.55      1562
 ```
 ![Fitting Graph](https://github.com/DaikonPlays/diet-warriors/blob/Milestone5/graphs/gb_fitting_graph.png)
 ![Confusion Matrix](https://github.com/DaikonPlays/diet-warriors/blob/Milestone5/graphs/gb_cm.png)
 
+```
+Class  dash
+True Positives:  157
+False Positives:  144
+True Negative:  1070
+False Negative:  191
+
+Class  keto
+True Positives:  213
+False Positives:  157
+True Negative:  1102
+False Negative:  90
+
+Class  mediterranean
+True Positives:  276
+False Positives:  117
+True Negative:  1084
+False Negative:  85
+
+Class  paleo
+True Positives:  66
+False Positives:  115
+True Negative:  1194
+False Negative:  187
+
+Class  vegan
+True Positives:  171
+False Positives:  146
+True Negative:  1119
+False Negative:  126
+```
 ## Discussion
 
 ## Conclusion
