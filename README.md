@@ -18,16 +18,20 @@
 
 ### **Data Exploration:**
 
+The first step in our data exploration was to identify the various attributes present in our dataset. Here are our findings:
+
 | Attribute | Explanation |
 |-----------|-------------|
-|**Diet_type** | The type of diet the recipe fits into. |
-| **Recipe_name**| The name of the recipe.|
-| **Cuisine_type**| The type of cuisine the recipe belongs to. |
-| **Protein(g)**| The amount of protein in the recipe, measured in grams. |
-| **Carbs(g)**| The amount of carbohydrates in the recipe, measured in grams. |
-| **Fat(g)**| The amount of fat in the recipe, measured in grams. |
-| **Extraction_day**| The day the data was extracted. |
-| **Extraction_time**| The time the data was extracted. |
+|**Diet_type** | The type of diet the recipe fits into |
+| **Recipe_name**| The name of the recipe|
+| **Cuisine_type**| The type of cuisine the recipe belongs to |
+| **Protein(g)**| The amount of protein in the recipe, measured in grams |
+| **Carbs(g)**| The amount of carbohydrates in the recipe, measured in grams |
+| **Fat(g)**| The amount of fat in the recipe, measured in grams |
+| **Extraction_day**| The day the data was extracted |
+| **Extraction_time**| The time the data was extracted |
+
+Our target variable is `Diet_Type` as we aim to predict which diet types best suit our users. The class contains the following unique labels:
 
 ```
 diet_types = diet_data['Diet_type'].unique()
@@ -35,6 +39,41 @@ print(diet_types)
 -----------------------------------------------
 ['paleo' 'vegan' 'keto' 'mediterranean' 'dash']
 ```
+
+We also examined the unique labels in the `Cuisine_Type` attribute:
+```
+cuisine_types = diet_data['Cuisine_type'].unique()
+print(cuisine_types)
+------------------------------------------------------------------------
+['american' 'south east asian' 'mexican' 'chinese' 'mediterranean'
+ 'italian' 'french' 'indian' 'nordic' 'eastern europe' 'central europe'
+ 'kosher' 'british' 'caribbean' 'south american' 'middle eastern' 'asian'
+ 'japanese' 'world']
+```
+
+In order to ensure data quality and avoid any errors, we are going to see if there are any null values in any of our columns, drop them if we do:
+```
+null_counts = diet_data.isnull().sum()
+print(null_counts)
+------------------------------------------
+Diet_type          0
+Recipe_name        0
+Cuisine_type       0
+Protein(g)         0
+Carbs(g)           0
+Fat(g)             0
+Extraction_day     0
+Extraction_time    0
+dtype: int64
+```
+We see that there are no null values. YAY!
+
+To visualize relationships in our data, we used two approaches:
+1. The pairplot function from seaborn to visualize pairwise relationships between our numerical features (Protein, Fat, Carbs)
+2. Pie charts to display the proportional composition of **Protein(g)**, **Carbs(g)**, and **Fat(g)** across different diet types in the diet_data dataset
+
+Below are our visualizations:
+
 ![Pair Plot](https://github.com/DaikonPlays/diet-warriors/blob/Milestone5/graphs/diet_type_pair_plot.png)
 
 ![Pie Chart](https://github.com/DaikonPlays/diet-warriors/blob/Milestone5/graphs/diet_type_pie_chart.png)
@@ -124,7 +163,8 @@ Training Accuracy: 0.7532
 Test Accuracy: 0.5557
 Validation Accuracy: 0.7574
 ```
-![Fitting Graph](https://github.com/DaikonPlays/diet-warriors/blob/Milestone5/graphs/gm_fitting_graph.png)
+![Fitting Graph](https://github.com/DaikonPlays/diet-warriors/blob/Milestone5/graphs/gb_fitting_graph.png)
+![Confusion Matrix](https://github.com/DaikonPlays/diet-warriors/blob/Milestone5/graphs/gb_cm.png)
 
 ## Discussion
 
