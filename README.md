@@ -69,7 +69,7 @@ dtype: int64
 We see that there are no null values. YAY!
 
 To visualize relationships in our data, we used two approaches:
-1. The pairplot function from seaborn to visualize pairwise relationships between our numerical features (Protein, Fat, Carbs)
+1. The `pairplot` function from seaborn to visualize pairwise relationships between our numerical features (Protein, Fat, Carbs)
 2. Pie charts to display the proportional composition of **Protein(g)**, **Carbs(g)**, and **Fat(g)** across different diet types in the diet_data dataset
 
 Below are our visualizations:
@@ -80,12 +80,46 @@ Below are our visualizations:
 
 ### **Pre-Processing:**
 
+For preprocessing, we firs tbegin by improving the dataset's readability by renaming columns to more concise forms, converting column names like `Diet_type` to `Diet` and `Recipe_name` to `Recipe`.
+
+```
+diet_data = diet_data.rename(
+    columns={
+        'Diet_type': 'Diet',
+        'Recipe_name': 'Recipe',
+        'Cuisine_type': 'Cuisine',
+        'Protein(g)': 'Protein',
+        'Carbs(g)': 'Carbs',
+        'Fat(g)': 'Fat',
+        })
+```
+
+We then cleaned the dataset by removing unnecessary temporal information, specifically the  `Extraction_day` and `Extraction_time` columns, which were not relevant to our classification task.
+
+```
+dd_processed = diet_data.drop(columns=['Extraction_day', 'Extraction_time'])
+```
+
+The feature engineering phase involved transforming categorical variables into a format suitable for machine learning algorithms. We applied Label Encoding to our target variable (`Diet`), and implemented One-Hot Encoding for the `Cuisine` categorical feature using pandas' `get_dummies()` function, which created binary columns for each cuisine type.
+
 ```
 encoder = LabelEncoder()
 
 # Encode Diet Type & Cuisine Type
 dd_processed['Diet'] = encoder.fit_transform(dd_processed['Diet'])
 dd_processed = pd.get_dummies(dd_processed, columns=['Cuisine'])
+```
+
+Finally, we will split our data in features and taget sets. We will use a 80-20 ratio for taining-test split, and will also create validation sets for model development and tuning. This validation split would later allow us to assess our model's performance during the development phase without compromising the integrity of our final test set.
+
+```
+X = dd_processed.drop(columns=['Recipe','Diet'])
+y = dd_processed['Diet']
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=23)
+
+# validation test
+X_train_val, X_test_val, y_train_val, y_test_val = train_test_split(X_train, y_train, test_size=0.2, random_state=42)
 ```
 
 ### **Model 1:**
