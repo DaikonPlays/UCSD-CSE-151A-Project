@@ -1,6 +1,6 @@
 # UCSD-CSE-151A-Project
 
-# [Click here for GitHub Repo](https://github.com/DaikonPlays/diet-warriors/tree/main)
+#### [Click here for GitHub Repo](https://github.com/DaikonPlays/diet-warriors/tree/main)
 
 ## Team Members
 | Name | GitHub |
@@ -10,78 +10,390 @@
 | Skyler Goh  | [https://github.com/SkylerGoh](https://github.com/SkylerGoh) |
 | Phillip Wu  | [https://github.com/philliptwu](https://github.com/philliptwu) |
 
-## MS2: Data Exploration:
-#### [Milestone 2 Notebook](https://github.com/DaikonPlays/diet-warriors/blob/Milestone2/src/data_exploration.ipynb)
+## Introduction
 
-### # of Observations
+In today's fast-paced world, maintaining specific dietary requirements has become increasingly challenging yet crucial for many individuals. Whether driven by health conditions, fitness goals, religious observances, or personal choices, adhering to a particular diet requires careful attention to meal composition. However, the complexity of modern food preparations, with their numerous ingredients and varying nutritional profiles, makes it increasingly difficult for individuals to confidently identify whether a meal aligns with their dietary guidelines.
 
-There are 7806 rows in our all_diets file, which means we have a total of 7806 observations on different diets. We have six total features: diet type, recipe name, cuisine, protein, carbs, and fats. Our target feature is the diet type, and the main independent features are protein, carb, fats, and cuisine.
+Enter **Diet Warriors**, our machine learning classification model designed to bridge this gap between complex meal compositions and dietary adherence. By analyzing nutritional content and cuisine types, our model aims to accurately classify meals into specific diet categories, providing users with immediate insight into whether a dish aligns with their dietary requirements. This classification capability is particularly valuable in an era where processed foods and multi-ingredient meals have become the norm rather than the exception.
 
-For cuisine types, there are a bunch of categories we account for: ['american' 'south east asian' 'mexican' 'chinese' 'mediterranean'
-'italian' 'french' 'indian' 'nordic' 'eastern europe' 'central europe'
-'kosher' 'british' 'caribbean' 'south american' 'middle eastern' 'asian'
-'japanese' 'world'].
-The diet types are our main target feature and there are five classes: ['paleo' 'vegan' 'keto' 'mediterranean' 'dash'].
-The rest of the features are numbers and are no discrete.
+The significance of our model extends beyond mere convenience. For individuals with specific health conditions requiring strict dietary adherence, such as diabetes or cardiovascular issues, accurate diet classification can help prevent adverse health effects. Athletes and fitness enthusiasts can better track whether their meals align with their training regimens, whether they're following a protein-rich diet for muscle building or a specialized diet for endurance training. Additionally, for those following religious dietary guidelines, such as halal or kosher requirements, our model provides an additional layer of verification for their food choices.
+"Diet Warriors" represents a practical application of machine learning to address a growing need in our society: the ability to quickly and accurately identify diet types based on nutritional content. In a world where dietary choices have become increasingly complex and consequential, our model serves as a technological ally in maintaining dietary compliance, supporting health goals, and respecting religious dietary observations.
 
-### Data Distribution
+## Methods
 
-There are 1522 obersavtions for vegan, 1274 observations for paleo, 1753 observations for mediterranean, 1512 observations for keto, 1745 observations for dash
+### **Data Exploration:**
 
-## Initial Pre-Processing Plans
+The first step in our data exploration was to identify the various attributes present in our dataset. Here are our findings:
 
-### Scale
+| Attribute | Explanation |
+|-----------|-------------|
+|**Diet_type** | The type of diet the recipe fits into |
+| **Recipe_name**| The name of the recipe|
+| **Cuisine_type**| The type of cuisine the recipe belongs to |
+| **Protein(g)**| The amount of protein in the recipe, measured in grams |
+| **Carbs(g)**| The amount of carbohydrates in the recipe, measured in grams |
+| **Fat(g)**| The amount of fat in the recipe, measured in grams |
+| **Extraction_day**| The day the data was extracted |
+| **Extraction_time**| The time the data was extracted |
 
-Our two categoriacal classes: diet type and cuisine, just have their own distinct categories for classification.
+Our target variable is `Diet_Type` as we aim to predict which diet types best suit our users. The class contains the following unique labels:
 
-For protein, fat, and carb, the means are pretty different: 83.23, 117.33, and 152.12 respectively. Furthermore, the stds are also very different: 89.8, 122.1, and 185.91 respectively. This indicates the distribution of data to be very different. Furthermore, the ranges are different too: [0, 1273], [0, 1930.24], and [0.6, 3405.55]. All these indicate that we need to normalize the data. We can do this using either Z-score normalization or Min Max normalization, so features are within a standard deviation of 1 with each other or are within the values 0 and 1.
+```
+diet_types = diet_data['Diet_type'].unique()
+print(diet_types)
+-----------------------------------------------
+['paleo' 'vegan' 'keto' 'mediterranean' 'dash']
+```
 
-### Dealing with missing data and null values
+We also examined the unique labels in the `Cuisine_Type` attribute:
+```
+cuisine_types = diet_data['Cuisine_type'].unique()
+print(cuisine_types)
+------------------------------------------------------------------------
+['american' 'south east asian' 'mexican' 'chinese' 'mediterranean'
+ 'italian' 'french' 'indian' 'nordic' 'eastern europe' 'central europe'
+ 'kosher' 'british' 'caribbean' 'south american' 'middle eastern' 'asian'
+ 'japanese' 'world']
+```
 
-There are no missing data and null values. 
+In order to ensure data quality and avoid any errors, we are going to see if there are any null values in any of our columns, drop them if we do:
+```
+null_counts = diet_data.isnull().sum()
+print(null_counts)
+------------------------------------------
+Diet_type          0
+Recipe_name        0
+Cuisine_type       0
+Protein(g)         0
+Carbs(g)           0
+Fat(g)             0
+Extraction_day     0
+Extraction_time    0
+dtype: int64
+```
+We see that there are no null values. YAY!
 
-### Dropping Unneccesary Data
+To visualize relationships in our data, we used two approaches:
+1. The `pairplot` function from seaborn to visualize pairwise relationships between our numerical features (Protein, Fat, Carbs)
+2. Pie charts to display the proportional composition of **Protein(g)**, **Carbs(g)**, and **Fat(g)** across different diet types in the diet_data dataset
 
-There are three features that we are considering dropping, which are cuisine name, extraction date, and time because they don't seem to be that impactful on our overall outcome.
+Below are our visualizations:
 
-### Classification Encoding
-For our attributes that are classes: Diet_type and Cuisine_type, we will have to encode them either using ordinal encoding or one-hot encoding for classification models to understand them.
+![Pair Plot](https://github.com/DaikonPlays/diet-warriors/blob/Milestone5/graphs/diet_type_pair_plot.png)
 
-## MS3: Data Pre-Processing
-#### [Milestone 3 Notebook](https://github.com/DaikonPlays/diet-warriors/blob/Milestone3/src/diet_classifer.ipynb) 
+![Pie Chart](https://github.com/DaikonPlays/diet-warriors/blob/Milestone5/graphs/diet_type_pie_chart.png)
 
-### Conclusion
-Our initial logistic regression model yielded surprisingly low accuracy at 40%. Through comparing MSE values between training (3.67) and validation (4.0) sets, we determined that while overfitting is not an issue due to their similar values, the high MSE relative to our label encoding range (0-4) indicates significant underfitting. This poor baseline performance suggests the need to explore alternative approaches. We propose implementing Support Vector Machines (SVM) as our next model, given their strength in handling non-linear relationships. This capability is particularly relevant for our dataset, where diet types and their features show considerable overlap. SVM's ability to create more sophisticated decision boundaries could potentially provide a more accurate classification of our dietary data.
+### **Pre-Processing:**
 
-## MS4: Second Model
-#### [Milestone 4 Notebook](https://github.com/DaikonPlays/diet-warriors/blob/Milestone4/src/diet_classifer.ipynb) 
+For preprocessing, we first begin by improving the dataset's readability by renaming columns to more concise forms, converting column names like `Diet_type` to `Diet` and `Recipe_name` to `Recipe`.
 
-### Model evaluations and training and test error
-For our new models, we tried three differnet types: XGBoost, SVC, and GradientBoost. For XGBoost, we used a simple XGBoost model to see if there were any changes in accuracy. After, we tried to do a base SVC model, which did show some improvment, up to mid 50s% for testing and training. After, we added code to fine-tune the SVC model parameters to test different combinations of the regularization parameter C and the kernel coefficient γ to see if there were any further improvements in the result. Then, we tried using GradientBoost and the accuracy went up very slightly compared to SVC. But, the improvement was insignificant. When looking at the training and test error from our initial model in MS3 and ours now in MS4, we saw an overall 15% improvement in accuracy, thus resulting in less error.
+```
+diet_data = diet_data.rename(
+    columns={
+        'Diet_type': 'Diet',
+        'Recipe_name': 'Recipe',
+        'Cuisine_type': 'Cuisine',
+        'Protein(g)': 'Protein',
+        'Carbs(g)': 'Carbs',
+        'Fat(g)': 'Fat',
+        })
+```
 
-### Where does your model fit in the fitting graph? 
+We then cleaned the dataset by removing unnecessary temporal information, specifically the  `Extraction_day` and `Extraction_time` columns, which were not relevant to our classification task.
 
-![Fitting Graph](https://github.com/DaikonPlays/diet-warriors/blob/Milestone4/graphs/gb_fitting_graph.png)
+```
+dd_processed = diet_data.drop(columns=['Extraction_day', 'Extraction_time'])
+```
 
-Based on our results, it seems that our model is likely underfitting the data, as both the training (60%) and validation (61%) accuracies are relatively low, suggesting the model isn't effectively capturing the underlying patterns. We hypothesize that this underfitting could stem from several factors. First, the default GradientBoost settings may not be optimal for our dataset, potentially resulting in insufficient model complexity. Additionally, the features we are using—fat, carbs, protein, and cuisine type—might not provide enough distinguishing power to differentiate between diet types. Second, there could be data imbalance in the dataset, with certain diet types being overrepresented, which could cause the model to struggle with learning patterns for less frequent classes, leading to poor generalization and lower test accuracy.
+The feature engineering phase involved transforming categorical variables into a format suitable for machine learning algorithms. We applied Label Encoding to our target variable (`Diet`), and implemented One-Hot Encoding for the `Cuisine` categorical feature using pandas' `get_dummies()` function, which created binary columns for each cuisine type.
 
-### What are the next models you are thinking of and why?
+```
+encoder = LabelEncoder()
 
-After reviewing our current model's performance, we are considering Random Forest and Neural Networks as the next potential models. Random Forest is a robust, versatile algorithm that is less sensitive to overfitting compared to individual decision trees. Given that our GradientBoost model performed slightly better on the validation set than on the training set, this may indicate overfitting to validation-specific characteristics. Random Forest, by aggregating multiple weak learners, might help reduce this issue and better capture complex relationships and interactions in the data. Additionally, Neural Networks could be another promising approach, especially for modeling the intricate patterns in diet type classification. Since diet types may share similar features, making them difficult to distinguish, we believe a neural network could learn these complex relationships more effectively. We plan to start with a simple feedforward network as a baseline and further refine it based on the results.
+# Encode Diet Type & Cuisine Type
+dd_processed['Diet'] = encoder.fit_transform(dd_processed['Diet'])
+dd_processed = pd.get_dummies(dd_processed, columns=['Cuisine'])
+```
 
-### Conclusion
+Finally, we will split our data in features and taget sets. We will use a 80-20 ratio for taining-test split, and will also create validation sets for model development and tuning. This validation split would later allow us to assess our model's performance during the development phase without compromising the integrity of our final test set.
 
-Our initial logistic regression model achieved relatively low accuracies around 40%, indicating significant underfitting of the data. We then implemented a Gradient Boost Classifier as our second approach, which showed modest improvement with training accuracy at 60%, testing at 55%, and validation at 61%. Despite this improvement, the consistently low performance across all metrics suggests that our model still fails to capture the underlying complexity of the data.
-The similar performance between training (60%) and validation (61%) sets reveals that our current model's limitations stem from both architectural constraints and data characteristics. Our feature set—consisting of fat, carbs, protein, and cuisine type—may lack the discriminative power needed for effective diet classification. Additionally, potential class imbalances in our dataset could be hampering the model's ability to learn patterns for underrepresented diet types.
-To address these limitations, we propose two promising approaches: Random Forest and Neural Networks. Random Forest's ensemble methodology could better handle complex feature interactions while maintaining robustness against overfitting. Neural Networks offer the potential to learn subtle patterns in diet classifications, particularly useful for distinguishing between similar diet categories. We will also explore feature engineering and address class imbalance issues to enhance model performance. Through these refinements, we aim to develop a more sophisticated and accurate diet classification system that better captures the nuances in our data.
+```
+X = dd_processed.drop(columns=['Recipe','Diet'])
+y = dd_processed['Diet']
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=23)
+
+# validation test
+X_train_val, X_test_val, y_train_val, y_test_val = train_test_split(X_train, y_train, test_size=0.2, random_state=23)
+```
+
+### **Model 1:**
+
+We chose our first model to be a simple Logistic Regression classifier. After training, we generated predictions on three different datasets: the training set, test set, and validation set. We calculated accuracy scores for each of these predictions using the `accuracy_score` metric, storing these scores in variables for training, test, and validation accuracy respectively. The resulting performance of the model is noted in the section below. 
+
+```
+# We are starting with a simple Logistic Regression to get a baseline performance
+logreg = LogisticRegression()
+logreg.fit(X_train, y_train)
+
+# Predictions
+y_pred_train = logreg.predict(X_train)
+y_pred_test = logreg.predict(X_test)
+y_pred_val = logreg.predict(X_test_val)
+
+logreg_training_accuracy = accuracy_score(y_train, y_pred_train)
+logreg_test_accuracy = accuracy_score(y_test, y_pred_test)
+logreg_validation_accuracy = accuracy_score(y_test_val, y_pred_val)
+```
+### **Model 2:**
+
+Similarly to our Logistic Regression implementation, we trained a Support Vector Machine (SVM) classifier using a radial basis function (RBF) kernel.
+
+```
+svc = SVC(kernel='rbf')
+svc.fit(X_train, y_train)
+
+# Predictions
+y_pred_train = svc.predict(X_train)
+y_pred_test = svc.predict(X_test)
+y_pred_val = svc.predict(X_test_val)
+
+svc_training_accuracy = accuracy_score(y_train, y_pred_train)
+svc_test_accuracy = accuracy_score(y_test, y_pred_test)
+svc_validation_accuracy = accuracy_score(y_test_val, y_pred_val)
+```
+
+### **Model 3:**
+
+Finally, we trained a Gradient Boosting Classifier in the same manner as the model above. This model was configured with the hyperparameters: 100 estimators, a learning rate of 0.1, maximum tree depth of 5, and a validation fraction of 0.1. 
+
+```
+gb_model = GradientBoostingClassifier(n_estimators=100, learning_rate=0.1, max_depth=5, validation_fraction=0.1, random_state=42)
+gb_model.fit(X_train, y_train)
+
+gb_model.score(X_test, y_test)
+gb_model.score(X_test_val, y_test_val)
+
+# Predictions
+y_pred_train = gb_model.predict(X_train)
+y_pred_test = gb_model.predict(X_test)
+y_pred_val = gb_model.predict(X_test_val)
+
+gb_training_accuracy = accuracy_score(y_train, y_pred_train)
+gb_test_accuracy = accuracy_score(y_test, y_pred_test)
+gb_validation_accuracy = accuracy_score(y_test_val, y_pred_val)
+```
+
+## Results
+
+Below is our calculated accuracy scores and a classification report for the Logistic Regression classifier:
+
+### **Model 1**
+
+```
+Training Accuracy: 0.5452
+Test Accuracy: 0.5378
+Validation Accuracy: 0.5292
+
+Classification Report:
+               precision    recall  f1-score   support
+
+           0       0.44      0.32      0.37       348
+           1       0.49      0.79      0.61       303
+           2       0.71      0.75      0.73       361
+           3       0.34      0.11      0.16       253
+           4       0.52      0.64      0.58       297
+
+    accuracy                           0.54      1562
+   macro avg       0.50      0.52      0.49      1562
+weighted avg       0.51      0.54      0.51      1562
+
+```
+To visualize our model's performance, we created a fitting graph comparing accuracies across different data splits:
+
+![Fitting Graph](https://github.com/DaikonPlays/diet-warriors/blob/Milestone5/graphs/logreg_fitting_graph.png)
+
+Further, we constructed a confusion matrix to analyze the model's performance across different diet types. For each diet category, we calculated and displayed TP, FN, TN, FN.
+
+![Confusion Matrix](https://github.com/DaikonPlays/diet-warriors/blob/Milestone5/graphs/logreg_cm.png)
+```
+Class  dash
+True Positives:  113
+False Positives:  142
+True Negative:  1072
+False Negative:  235
+
+Class  keto
+True Positives:  238
+False Positives:  245
+True Negative:  1014
+False Negative:  65
+
+Class  mediterranean
+True Positives:  272
+False Positives:  110
+True Negative:  1091
+False Negative:  89
+
+Class  paleo
+True Positives:  27
+False Positives:  53
+True Negative:  1256
+False Negative:  226
+
+Class  vegan
+True Positives:  190
+False Positives:  172
+True Negative:  1093
+False Negative:  107
+```
+
+### **Model 2**
+
+Our results and figures for the SVM model:
+
+```
+Training Accuracy: 0.5852
+Test Accuracy: 0.5589
+Validation Accuracy: 0.5733
+
+Classification Report:
+               precision    recall  f1-score   support
+
+           0       0.49      0.39      0.43       348
+           1       0.56      0.73      0.63       303
+           2       0.70      0.77      0.73       361
+           3       0.33      0.19      0.24       253
+           4       0.55      0.65      0.60       297
+
+    accuracy                           0.56      1562
+   macro avg       0.53      0.54      0.53      1562
+weighted avg       0.54      0.56      0.54      1562
+```
+
+![Fitting Graph](https://github.com/DaikonPlays/diet-warriors/blob/Milestone5/graphs/svc_fitting_graph.png)
+![Confusion Matrix](https://github.com/DaikonPlays/diet-warriors/blob/Milestone5/graphs/svc_cm.png)
+
+```
+Class  dash
+True Positives:  135
+False Positives:  141
+True Negative:  1073
+False Negative:  213
+
+Class  keto
+True Positives:  220
+False Positives:  174
+True Negative:  1085
+False Negative:  83
+
+Class  mediterranean
+True Positives:  277
+False Positives:  118
+True Negative:  1083
+False Negative:  84
+
+Class  paleo
+True Positives:  48
+False Positives:  99
+True Negative:  1210
+False Negative:  205
+
+Class  vegan
+True Positives:  193
+False Positives:  157
+True Negative:  1108
+False Negative:  104
+```
+
+### **Model 3**
+
+Finally, our results and figures for the Gradient Boost Classifier:
+
+```
+Training Accuracy: 0.7534
+Test Accuracy: 0.5653
+Validation Accuracy: 0.7462
+
+Classification Report:
+               precision    recall  f1-score   support
+
+           0       0.52      0.45      0.48       348
+           1       0.58      0.70      0.63       303
+           2       0.70      0.76      0.73       361
+           3       0.36      0.26      0.30       253
+           4       0.54      0.58      0.56       297
+
+    accuracy                           0.57      1562
+   macro avg       0.54      0.55      0.54      1562
+weighted avg       0.55      0.57      0.55      1562
+```
+![Fitting Graph](https://github.com/DaikonPlays/diet-warriors/blob/Milestone5/graphs/gb_fitting_graph.png)
+![Confusion Matrix](https://github.com/DaikonPlays/diet-warriors/blob/Milestone5/graphs/gb_cm.png)
+
+```
+Class  dash
+True Positives:  157
+False Positives:  144
+True Negative:  1070
+False Negative:  191
+
+Class  keto
+True Positives:  213
+False Positives:  157
+True Negative:  1102
+False Negative:  90
+
+Class  mediterranean
+True Positives:  276
+False Positives:  117
+True Negative:  1084
+False Negative:  85
+
+Class  paleo
+True Positives:  66
+False Positives:  115
+True Negative:  1194
+False Negative:  187
+
+Class  vegan
+True Positives:  171
+False Positives:  146
+True Negative:  1119
+False Negative:  126
+```
+## Discussion
+
+In Milestone 3, we began by training a Logistic Regression Classifier on our diet classification task. As shown above, the model demonstrates relatively consistent performance across all three datasets, with accuracies of 54% on the training and test sets, and 53% on the validation data. The small difference between training and test accuracy (only about 0.74 percentage points) suggests that overfitting is not a significant issue. However, the overall low accuracy across all splits indicates that the model is likely underfitting, meaning it struggles to capture the underlying patterns in the relationship between our features (nutritional content and cuisine type) and the target (diet types).
+
+After some discussion, we hypothesized that the relatively low accuracy with the Logistic Regression model suggests several potential issues. First, we considered the possibility that the dataset itself might not have enough distinguishing features. Specifically, there may be overlap in the nutritional profiles across different diet types. For example, in the pie chart above, we observe that the overall distribution of fat, protein, and carbs in the ‘mediterranean’ and ‘dash’ diets are relatively similar, differing only slightly. Another limitation of our initial model is that the relationship between nutritional values and diet types may be more non-linear than our model can capture. Since Logistic Regression is a linear model, it is not able to account for more complex relationships that could exist between the features and the target.
+
+After analyzing the results of our first model, we decided to train our second model using a Support Vector Machine (SVM). For this model, we chose the Radial Basis Function (RBF) kernel because it transforms the data into a higher-dimensional space, allowing the SVM to find a non-linear decision boundary. This choice was made to test our hypothesis from the previous model's analysis and to explore whether a non-linear model would improve performance. We also tried to tune the hyperparameters such as regularization strength (C) using GridSearchCV to see if the accuracy would improve for our SVM. Specifically, we tested multiple values for C (0.1,1,10) and γ (0.1,0.01,0.001) while keeping the kernel fixed.
+
+After running the model, we observed an improvement of about 3-4 percentage points across all datasets, which supports our hypothesis that the dataset contains more complexity than initially anticipated. However, despite the improvement, the overall accuracy remains relatively modest. Even after hypertuning, the accuracy still remained consistent to the previous ones. This suggests that, while the SVM with the RBF kernel is better suited for capturing non-linear relationships, it still struggles to fully capture the complexity of diet classification with our current features.
+
+For our final model, we chose to train a Gradient Boosting Classifier, which can naturally handle feature interactions through its tree-based architecture. We believed that this was particularly relevant for our dataset, where the relationship between nutritional content (protein, carbs, fat) and diet types might involve complex interdependencies. For instance, the combination of high fat and low carbs may be more indicative of a keto diet than either feature alone. The sequential nature of Gradient Boosting, where each tree corrects the errors of the previous one, allows the model to learn intricate patterns gradually. This is especially useful when diet types have subtle distinctions in their nutritional profiles that simpler models might miss. Unlike SVM, which uses a single kernel function, Gradient Boosting can automatically learn feature transformations through its tree structure, making it well-suited to handle both numerical features (nutritional values) and one-hot encoded categorical features (cuisine types) in a unified way.
+
+For our hyperparameters, we chose `n_estimators=100` to ensure the model has enough boosting stages to capture patterns without being overly computationally expensive. The `learning_rate=0.1` balances the contribution of each tree, providing steady and controlled learning while minimizing the risk of overfitting. The `max_depth=5` limits the complexity of individual trees, enabling the model to capture moderately complex relationships without overfitting to the training data.
+
+The result of our final model, as shown in the above section, demonstrated a significant increase in both training and validation accuracies, but the test accuracy only showed a marginal improvement over the SVM's performance, which was unexpected. The large gap between training/validation and test performance (approximately 19 percentage points) indicates that the model has significant overfitting issues. Our team analyzed this overfitting and identified several possible reasons:
+
+First, the hyperparameters we chose—such as the relatively high depth and the large number of estimators—might not be suitable for the complexity of our dataset. These parameters could make the model overly complex, leading it to learn too closely from the training data rather than generalizing to unseen data. Second, while we observed some complexity in our data earlier, the model's architecture may assume a higher level of intricacy than necessary. The choice of deeper trees and a larger number of estimators could be capturing noise in the data rather than the true patterns, leading to overfitting. Finally, there is a possibility that the dataset contains noise or irrelevant features, which the model could be learning instead of the actual underlying structure. This is particularly a concern with Gradient Boosting models, as they iteratively focus on correcting residuals, which can result in overfitting to noise if not properly regularized.
+
+## Conclusion
+
+In this project, we explored the feasibility of classifying recipes into different diet types based solely on their nutritional composition. Despite implementing three increasingly sophisticated models (Logistic Regression, Support Vector Machine, and Gradient Boosting), we observed only modest improvements in test performance metrics (accuracy, precision, and recall). Our analysis revealed that this limited improvement was primarily due to substantial overlap in nutritional profiles across different diet types, as evidenced by our exploratory data analysis and feature pairplots. The model's performance was significantly constrained by our limited feature set, which consisted of only three basic nutritional components: carbohydrates, protein, and fats. This dimensional constraint made it challenging for our simpler models to effectively distinguish between different diet classifications, leading to underfitting in our initial models. However, our final Gradient Boosting model showed significant overfitting, with a large gap between training/validation and test performance, indicating that while the model could learn complex patterns from our limited features, these patterns didn't generalize well to new data.
+
+To enhance the model's performance, several key improvements could be implemented in future iterations. The primary focus should be on expanding beyond the basic macronutrients to include a comprehensive nutritional profile, including detailed breakdown of fats (saturated, unsaturated, trans fats), micronutrient content (vitamins, minerals), dietary fiber, sodium levels, and other relevant nutritional metrics. This would require investing in more extensive data collection to capture these additional nutritional parameters and ensure balanced representation across different diet types. With a richer feature set, we could then explore more sophisticated modeling approaches like ResNet or DenseNet that excel at feature extraction, while carefully monitoring and controlling for overfitting through proper regularization and validation techniques. Additional considerations such as seasonal variations in recipes, preparation methods affecting nutritional content, and common ingredient substitutions could also provide valuable insights for improving classification accuracy. While our current model provides a foundation for diet classification, these proposed enhancements could significantly improve its practical applicability and reliability, creating a more robust system for diet type prediction.
+
+## Statement of Collaboration
+
+Skyler Goh: Contributed to write-up, writing code for preprocessing, model metrics, and result graphs. Helped contribute to group discussion, feedback, and analysis. 
+
+Kevin Yan: Set up project, contributed to write-up, programmed, trained, and tuned xgboost model. Helped contribute to group discussion, feedback, and analysis. 
+
+Phillip Wu: Contributed to write-up, programmed, trained, and tuned gradient boost model. Helped contribute to group discussion, feedback, and analysis. 
+
+Luffy Saito: Contributed to write-up, programmed pre-processing,  data-encoding, data-splitting, and first logistic model, programmed and trained svm model, 10x bug fixer, project organizer, Helped contribute to group discussion, feedback, and analysis. 
 
 
-### Predictions of correct and FP and FN from test dataset
-Code for this can be found in our MS 4 branch
-| Class            | True Positives | False Positives | True Negatives | False Negatives |
-|-------------------|----------------|-----------------|----------------|-----------------|
-| Dash             | 127            | 131             | 1084           | 220             |
-| Keto             | 203            | 186             | 1083           | 90              |
-| Mediterranean    | 262            | 114             | 1096           | 90              |
-| Paleo            | 57             | 104             | 1189           | 212             |
-| Vegan            | 198            | 180             | 1081           | 103             |
