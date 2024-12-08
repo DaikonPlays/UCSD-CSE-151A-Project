@@ -80,7 +80,7 @@ Below are our visualizations:
 
 ### **Pre-Processing:**
 
-For preprocessing, we firs tbegin by improving the dataset's readability by renaming columns to more concise forms, converting column names like `Diet_type` to `Diet` and `Recipe_name` to `Recipe`.
+For preprocessing, we first begin by improving the dataset's readability by renaming columns to more concise forms, converting column names like `Diet_type` to `Diet` and `Recipe_name` to `Recipe`.
 
 ```
 diet_data = diet_data.rename(
@@ -379,4 +379,15 @@ First, the hyperparameters we chose—such as the relatively high depth and the 
 In this project, we explored the possibility of classifying different recipes solely from their nutritional facts. Despite the use of three different models, we only saw minor increases in performance (measured in accuracy, precision, and recall). We believed that this was due to the extreme overlap between recipes of different diet types shown in our data exploration pairplot. The features used to train the model were quite limited to only the carbs, protein, and fats of the recipe. Because of the limited features, there were not enough dimensions for our models to effectively separate the data into different classes despite the more complex models used. This led our models to severely underfit the data unable to effectively classify each recipe. 
 
 For future works, a starting point would be to enhance our dataset with more nutritional facts of each recipe. Instead of just the 3 features (Fat, Carbs, and Protein), we could expand it to the full nutritional list including sodium levels, minerals, expanding fats to Saturated versus Trans, Dietary Fiber, etc. This would involve a lot more data collection since the base dataset we used only have the 3 features mentioned earlier. So for future work, we should spend more time on data collection. We could then move on to utilizing more complex models with better feature extraction such as ResNet or DenseNet because our base 3 features have a lot of overlap in impact. This should allow for a more robust model. 
+
 ## Statement of Collaboration
+
+Skyler Goh: Contributed to write-up, writing code for preprocessing, model metrics, and result graphs. Helped contribute to group discussion, feedback, and analysis. 
+
+Kevin Yan: Set up project, contributed to write-up, programmed, trained, and tuned xgboost model. Helped contribute to group discussion, feedback, and analysis. 
+
+Phillip Wu: Contributed to write-up, programmed, trained, and tuned gradient boost model. Helped contribute to group discussion, feedback, and analysis. 
+
+Luffy Saito: Contributed to write-up, programmed pre-processing,  data-encoding, data-splitting, and first logistic model, programmed and trained svm model, 10x bug fixer, project organizer, Helped contribute to group discussion, feedback, and analysis. 
+
+
